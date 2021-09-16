@@ -1,31 +1,26 @@
 import { errorResponse } from '../helpers';
 import { User } from '../models';
-
-const jwt = require('jsonwebtoken');
+import { auth } from 'firebase-admin';
 
 const apiAuth = async (req, res, next) => {
-  if (!(req.headers && req.headers['x-token'])) {
+  if (!(req.headers && req.headers['authorization'])) {
     return errorResponse(req, res, 'Token is not provided', 401);
   }
-  const token = req.headers['x-token'];
+  const token = req.headers['authorization'];
   try {
-    const decoded = jwt.verify(token, process.env.SECRET);
-    req.user = decoded.user;
-    const user = await User.scope('withSecretColumns').findOne({
-      where: { email: req.user.email },
+    const authResp = await auth().verifyIdToken(token);
+    const { uid } = authResp;
+    const user = await User.findOne({
+      where: { uid },
     });
-    if (!user) {
-      return errorResponse(req, res, 'User is not found in system', 401);
-    }
-    const reqUser = { ...user.get() };
-    reqUser.userId = user.id;
-    req.user = reqUser;
+    if (!user) return errorResponse(req, res, 'User is not found in system', 401);
+    req.user = user;
     return next();
   } catch (error) {
     return errorResponse(
       req,
       res,
-      'Incorrect token is provided, try re-login',
+      'Incorrect token is provided',
       401,
     );
   }

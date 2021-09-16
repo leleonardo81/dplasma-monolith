@@ -1,48 +1,28 @@
-
-
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define(
     'User',
     {
-      firstName: {
+      uid: {
+        type: DataTypes.STRING,
+        primaryKey: true
+      },
+      name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      lastName: {
-        type: DataTypes.STRING,
-      },
-      email: {
+      nik: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      password: {
+      phoneNumber: {
         type: DataTypes.STRING,
-      },
-      profilePic: {
-        type: DataTypes.STRING,
-      },
-      isAdmin: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
-      verifyToken: {
-        type: DataTypes.STRING,
-        defaultValue: null,
-      },
-      isVerified: {
-        type: DataTypes.BOOLEAN,
-        defaultValue: false,
-      },
+        allowNull: false,
+      }
     },
     {
       defaultScope: {
-        attributes: { exclude: ['password', 'verifyToken', 'isAdmin'] },
-      },
-      scopes: {
-        withSecretColumns: {
-          attributes: { include: ['password', 'verifyToken', 'isAdmin'] },
-        },
-      },
+        attributes: { exclude: ['nik'] },
+      }
     },
   );
   User.associate = function (models) {
