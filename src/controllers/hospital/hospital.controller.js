@@ -1,5 +1,5 @@
-import { successResponse } from "../../helpers";
-import { Hospital, Address } from "../../models"
+import { successResponse, errorResponse } from "../../helpers";
+import { Hospital, Address } from "../../models";
 
 export const listRS = async (req, res) => {
   try {

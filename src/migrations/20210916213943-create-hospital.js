@@ -5,7 +5,7 @@ module.exports = {
       rsid: {
         allowNull: false,
         primaryKey: true,
-        type: Sequelize.UUID,
+        type: Sequelize.STRING,
         defaultValue: Sequelize.UUIDV4
       },
       name: {
@@ -14,7 +14,7 @@ module.exports = {
       },
       address_id: {
         allowNull: false,
-        type: Sequelize.UUID
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,

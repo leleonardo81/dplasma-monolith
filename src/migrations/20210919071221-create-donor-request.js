@@ -1,24 +1,36 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Addresses', {
+    return queryInterface.createTable('DonorRequests', {
       id: {
         allowNull: false,
         primaryKey: true,
         type: Sequelize.STRING,
         defaultValue: Sequelize.UUIDV4
       },
-      detail: {
+      uid: {
         allowNull: false,
         type: Sequelize.STRING
       },
-      lat: {
+      rsid: {
         allowNull: false,
-        type: Sequelize.FLOAT
+        type: Sequelize.STRING
       },
-      lng: {
+      status: {
         allowNull: false,
-        type: Sequelize.FLOAT
+        type: Sequelize.STRING
+      },
+      bloodtype: {
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      age: {
+        allowNull: false,
+        type: Sequelize.INTEGER
+      },
+      description: {
+        allowNull: true,
+        type: Sequelize.STRING
       },
       createdAt: {
         allowNull: false,
@@ -31,6 +43,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Addresses');
+    return queryInterface.dropTable('DonorRequests');
   }
 };

@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
   const Address = sequelize.define('Address', {
     id: {
-      type: DataTypes.UUID,
+      type: DataTypes.STRING,
       primaryKey: true,
       defaultValue: DataTypes.UUIDV4
     },
