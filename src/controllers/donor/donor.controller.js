@@ -52,6 +52,8 @@ export const getDonorRequest = async (req, res) => {
   try {
     const query = {};
     if (rsid) query.rsid = rsid;
+    if (lat) query.lat = lat;
+    if (lng) query.lng = lng;
     const donorRequest = await DonorRequest.findAll({
       where: query
     });
