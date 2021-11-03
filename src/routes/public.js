@@ -25,10 +25,10 @@ router.post(
   validate(userValidator.register),
   userController.register,
 );
-router.post(
-  '/test',
-  userController.test
-);
+// router.post(
+//   '/test',
+//   userController.test
+// );
 router.get(
   '/rumah-sakit',
   hospitalController.listRS
