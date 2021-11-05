@@ -1,5 +1,5 @@
 import { successResponse, errorResponse } from "../../helpers";
-import { DonorRequest } from "../../models";
+import { DonorRequest, User, Hospital } from "../../models";
 
 export const assesment = async (req, res) => {
   const {
@@ -61,5 +61,20 @@ export const getDonorRequest = async (req, res) => {
   } catch (error) {
     console.log(error);
     return errorResponse(req, res, "Server Error");
+  }
+}
+
+export const getDetailDonorRequest = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const donorRequest = await DonorRequest.findOne({where: { id }});
+    const user = await User.findOne({ where: { uid: donorRequest.uid } });
+    delete donorRequest.uid;
+    const hospital = await Hospital.findOne({ where: {rsid: donorRequest.rsid}});
+    delete donorRequest.rsid;
+    successResponse(req, res, {...donorRequest, hospital, user});
+  } catch (error) {
+    console.error(error)
+    return errorResponse(req, res, "cannot Find", 404);
   }
 }

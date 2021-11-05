@@ -54,5 +54,9 @@ router.get(
   '/donor-request',
   donorController.getDonorRequest
 )
+router.get(
+  '/donor-request/:id',
+  donorController.getDetailDonorRequest
+)
 
 module.exports = router;
