@@ -72,6 +72,7 @@ export const getDetailDonorRequest = async (req, res) => {
     delete donorRequest.uid;
     const hospital = await Hospital.findOne({ where: {rsid: donorRequest.rsid}});
     delete donorRequest.rsid;
+    console.log({...donorRequest, hospital, user});
     successResponse(req, res, {...donorRequest, hospital, user});
   } catch (error) {
     console.error(error)
