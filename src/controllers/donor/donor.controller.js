@@ -67,10 +67,10 @@ export const getDonorRequest = async (req, res) => {
 export const getDetailDonorRequest = async (req, res) => {
   const { id } = req.params;
   try {
-    const donorRequest = await DonorRequest.findOne({where: { id }});
-    const user = await User.findOne({ where: { uid: donorRequest.uid } });
+    const donorRequest = (await DonorRequest.findOne({where: { id }})).dataValues;
+    const user = (await User.findOne({ where: { uid: donorRequest.uid } })).dataValues;
     delete donorRequest.uid;
-    const hospital = await Hospital.findOne({ where: {rsid: donorRequest.rsid}});
+    const hospital = (await Hospital.findOne({ where: {rsid: donorRequest.rsid}})).dataValues;
     delete donorRequest.rsid;
     console.log({...donorRequest, hospital, user});
     successResponse(req, res, {...donorRequest, hospital, user});
