@@ -5,101 +5,16 @@ import { User } from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
 import { auth } from 'firebase-admin';
 
-export const allUsers = async (req, res) => {
-  try {
-    const page = req.params.page || 1;
-    const limit = 2;
-    const users = await User.findAndCountAll({
-      order: [['createdAt', 'DESC'], ['firstName', 'ASC']],
-      offset: (page - 1) * limit,
-      limit,
-    });
-    return successResponse(req, res, { users });
-  } catch (error) {
-    return errorResponse(req, res, error.message);
-  }
-};
-
-// export const register = async (req, res) => {
+// export const allUsers = async (req, res) => {
 //   try {
-//     const {
-//       email, password, firstName, lastName,
-//     } = req.body;
-//     if (process.env.IS_GOOGLE_AUTH_ENABLE === 'true') {
-//       if (!req.body.code) {
-//         throw new Error('code must be defined');
-//       }
-//       const { code } = req.body;
-//       const customUrl = `${process.env.GOOGLE_CAPTCHA_URL}?secret=${
-//         process.env.GOOGLE_CAPTCHA_SECRET_SERVER
-//       }&response=${code}`;
-//       const response = await axios({
-//         method: 'post',
-//         url: customUrl,
-//         data: {
-//           secret: process.env.GOOGLE_CAPTCHA_SECRET_SERVER,
-//           response: code,
-//         },
-//         config: { headers: { 'Content-Type': 'multipart/form-data' } },
-//       });
-//       if (!(response && response.data && response.data.success === true)) {
-//         throw new Error('Google captcha is not valid');
-//       }
-//     }
-
-//     const user = await User.scope('withSecretColumns').findOne({
-//       where: { email },
+//     const page = req.params.page || 1;
+//     const limit = 2;
+//     const users = await User.findAndCountAll({
+//       order: [['createdAt', 'DESC'], ['firstName', 'ASC']],
+//       offset: (page - 1) * limit,
+//       limit,
 //     });
-//     if (user) {
-//       throw new Error('User already exists with same email');
-//     }
-//     const reqPass = crypto
-//       .createHash('md5')
-//       .update(password)
-//       .digest('hex');
-//     const payload = {
-//       email,
-//       firstName,
-//       lastName,
-//       password: reqPass,
-//       isVerified: false,
-//       verifyToken: uniqueId(),
-//     };
-
-//     const newUser = await User.create(payload);
-//     return successResponse(req, res, {});
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };
-
-// export const login = async (req, res) => {
-//   try {
-//     const user = await User.scope('withSecretColumns').findOne({
-//       where: { email: req.body.email },
-//     });
-//     if (!user) {
-//       throw new Error('Incorrect Email Id/Password');
-//     }
-//     const reqPass = crypto
-//       .createHash('md5')
-//       .update(req.body.password || '')
-//       .digest('hex');
-//     if (reqPass !== user.password) {
-//       throw new Error('Incorrect Email Id/Password');
-//     }
-//     const token = jwt.sign(
-//       {
-//         user: {
-//           userId: user.id,
-//           email: user.email,
-//           createdAt: new Date(),
-//         },
-//       },
-//       process.env.SECRET,
-//     );
-//     delete user.dataValues.password;
-//     return successResponse(req, res, { user, token });
+//     return successResponse(req, res, { users });
 //   } catch (error) {
 //     return errorResponse(req, res, error.message);
 //   }
@@ -107,13 +22,22 @@ export const allUsers = async (req, res) => {
 
 export const profile = async (req, res) => {
   try {
-    const { userId } = req.user;
-    const user = await User.findOne({ where: { id: userId } });
-    return successResponse(req, res, { user });
+    return successResponse(req, res, req.user);
   } catch (error) {
-    return errorResponse(req, res, error.message);
+    return errorResponse(req, res, "Forbidden", 400);
   }
 };
+
+export const updateProfile = async (req, res) => {
+  const { body } = req;
+  try {
+    const { uid } = req.user;
+    const resp = await User.update(body, {where: {uid}});
+    return successResponse(req, res, resp);
+  } catch (error) {
+    return errorResponse(req, res, "Server Error");
+  }
+}
 
 // export const changePassword = async (req, res) => {
 //   try {
@@ -169,6 +93,6 @@ export const register = async (req, res) => {
   }
 };
 
-export const test = (req,res) => {
-  successResponse(req, res, "HELLOWORLD");
-}
+// export const test = (req,res) => {
+//   successResponse(req, res, "HELLOWORLD");
+// }
