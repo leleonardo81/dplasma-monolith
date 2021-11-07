@@ -60,12 +60,13 @@ router.get(
 );
 router.get(
   '/profil',
+  apiAuth,
   userController.profile
 );
 router.post(
   '/profil',
   apiAuth,
-  userController.profile
+  userController.updateProfile
 );
 
 module.exports = router;
