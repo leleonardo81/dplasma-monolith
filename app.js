@@ -14,7 +14,7 @@ import * as admin from 'firebase-admin';
 
 dotenv.config();
 require('./src/config/sequelize');
-var serviceAccount = require("./ta-leonardo-firebase-adminsdk-2tv6v-77c46a1e71.json");
+var serviceAccount = require("./new-ta-leonardo-firebase-adminsdk-i9i1n-505d834529.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount)

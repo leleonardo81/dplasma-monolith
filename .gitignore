@@ -4,6 +4,7 @@ public/node_modules
 coverage
 yarn-error.log
 yarn.lock
+new-ta-leonardo-**.json
 ta-leonardo-**.json
 fourth-groove-**.json
 package-lock.json
