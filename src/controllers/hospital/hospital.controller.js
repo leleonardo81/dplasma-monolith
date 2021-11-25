@@ -20,7 +20,10 @@ export const listRS = async (req, res) => {
 export const createRS = async (req, res) => {
   try {
     const { body } = req;
-    const data = {...body, address: JSON.parse(body.address)}
+    const data = {
+      ...body, 
+      address: (typeof body.address === 'string') ? JSON.parse(body.address) : body.address
+    }
     const hospital = await Hospital.create(data, {
       include: [{
         association: Hospital.address,
