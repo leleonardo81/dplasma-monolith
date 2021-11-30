@@ -48,14 +48,18 @@ export const postDonorRequest = async (req, res) => {
 }
 
 export const getDonorRequest = async (req, res) => {
+  const page = Number(req.query.page) || 1;
+  const limit = Number(req.query.size) || 5;
   const { lat, lng, rsid } = req.query;
   try {
     const query = {};
     if (rsid) query.rsid = rsid;
     if (lat) query.lat = lat;
     if (lng) query.lng = lng;
-    const donorRequest = await DonorRequest.findAll({
-      where: query
+    const donorRequest = await DonorRequest.findAndCountAll({
+      where: query,
+      offset: (page-1) * limit,
+      limit
     });
     successResponse(req, res, donorRequest);
   } catch (error) {
