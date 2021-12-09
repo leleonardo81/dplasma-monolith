@@ -29,7 +29,7 @@ export const assesment = async (req, res) => {
     
     successResponse(req, res, { isEligible });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return errorResponse(req, res, "Server Error");
   }
 }
@@ -42,7 +42,7 @@ export const postDonorRequest = async (req, res) => {
     
     successResponse(req, res, donorRequest);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return errorResponse(req, res, "Server Error");
   }
 }
@@ -63,7 +63,7 @@ export const getDonorRequest = async (req, res) => {
     });
     successResponse(req, res, donorRequest);
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return errorResponse(req, res, "Server Error");
   }
 }
@@ -79,7 +79,6 @@ export const getDetailDonorRequest = async (req, res) => {
       where: {rsid: donorRequest.rsid}
     })).dataValues;
     delete donorRequest.rsid;
-    console.log({...donorRequest, hospital, user});
     successResponse(req, res, {...donorRequest, hospital, user});
   } catch (error) {
     console.error(error)

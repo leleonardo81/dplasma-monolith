@@ -25,10 +25,6 @@ router.post(
   validate(userValidator.register),
   userController.register,
 );
-// router.post(
-//   '/test',
-//   userController.test
-// );
 router.get(
   '/rumah-sakit',
   hospitalController.listRS
@@ -36,7 +32,6 @@ router.get(
 router.post(
   '/rumah-sakit',
   validate(hospitalValidator.createHospital),
-  // adminAccess
   hospitalController.createRS
 );
 router.post(

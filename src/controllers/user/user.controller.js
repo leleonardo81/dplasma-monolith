@@ -1,24 +1,6 @@
-// import jwt from 'jsonwebtoken';
-// import crypto from 'crypto';
-// import axios from 'axios';
 import { User } from '../../models';
 import { successResponse, errorResponse } from '../../helpers';
 import { auth } from 'firebase-admin';
-
-// export const allUsers = async (req, res) => {
-//   try {
-//     const page = req.params.page || 1;
-//     const limit = 2;
-//     const users = await User.findAndCountAll({
-//       order: [['createdAt', 'DESC'], ['firstName', 'ASC']],
-//       offset: (page - 1) * limit,
-//       limit,
-//     });
-//     return successResponse(req, res, { users });
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };
 
 export const profile = async (req, res) => {
   try {
@@ -39,33 +21,6 @@ export const updateProfile = async (req, res) => {
   }
 }
 
-// export const changePassword = async (req, res) => {
-//   try {
-//     const { userId } = req.user;
-//     const user = await User.scope('withSecretColumns').findOne({
-//       where: { id: userId },
-//     });
-
-//     const reqPass = crypto
-//       .createHash('md5')
-//       .update(req.body.oldPassword)
-//       .digest('hex');
-//     if (reqPass !== user.password) {
-//       throw new Error('Old password is incorrect');
-//     }
-
-//     const newPass = crypto
-//       .createHash('md5')
-//       .update(req.body.newPassword)
-//       .digest('hex');
-
-//     await User.update({ password: newPass }, { where: { id: user.id } });
-//     return successResponse(req, res, {});
-//   } catch (error) {
-//     return errorResponse(req, res, error.message);
-//   }
-// };
-
 export const login = async (req, res) => {
   try {
     const { user } = req;
@@ -79,7 +34,6 @@ export const login = async (req, res) => {
 
 export const register = async (req, res) => {
   try {
-    // console.log(req.body.token);
     const authResp = await auth().verifyIdToken(req.headers.authorization);
     const { uid } = authResp;
     const { name, nik, phoneNumber } = req.body;
@@ -92,7 +46,3 @@ export const register = async (req, res) => {
     return errorResponse(req, res, "Server Error");
   }
 };
-
-// export const test = (req,res) => {
-//   successResponse(req, res, "HELLOWORLD");
-// }
