@@ -1,0 +1,59 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dplasma
+spec:
+  selector:
+    app: dplasma
+  ports:
+    - port: 80
+      targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dplasma
+spec:
+  replicas: 40
+  selector:
+    matchLabels:
+      app: dplasma
+  template:
+    metadata:
+      labels:
+        app: dplasma
+    spec:
+      containers:
+        - name: dplasma
+          image: ta/dplasma
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_HOST
+              value: localhost
+            - name: DB_USER
+              value: dplasma
+            - name: DB_PASS
+              value: dplasma
+            - name: DB_NAME
+              value: dplasma
+            - name: DB_DIALECT
+              value: postgresql
+            - name: DB_PORT
+              value: 5432
+            - name: APP_HOST
+              value: localhost
+            - name: APP_PORT
+              value: 8080
+            - name: SECRET
+              value: adasxovnklnqklnkjdsankdnw
+            - name: IS_GOOGLE_AUTH_ENABLE
+              value: false
+            - name: GOOGLE_CAPTCHA_SECRET_CLIENT
+              value: secret
+            - name: GOOGLE_CAPTCHA_SECRET_SERVER
+              value: secret
+            - name: GOOGLE_CAPTCHA_URL
+              value: https://www.google.com/recaptcha/api/siteverify
+          imagePullPolicy: Always
