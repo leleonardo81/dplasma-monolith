@@ -1,7 +1,116 @@
 {
-  "apps": [{
-    "script" : "./server.js",
-    "instances": "max",
-    "exec_mode": "cluster"
-  }]
+  "apps": [
+    {
+      "name": "server0",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8080
+      }
+    },
+    {
+      "name": "server1",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8081
+      }
+    },
+    {
+      "name": "server2",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8082
+      }
+    },
+    {
+      "name": "server3",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8083
+      }
+    },
+    {
+      "name": "server4",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8084
+      }
+    },
+    {
+      "name": "server5",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8085
+      }
+    },
+    {
+      "name": "server6",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8086
+      }
+    },
+    {
+      "name": "server7",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8087
+      }
+    },
+    {
+      "name": "server8",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8088
+      }
+    },
+    {
+      "name": "server9",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8089
+      }
+    },
+    {
+      "name": "server10",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8090
+      }
+    },
+    {
+      "name": "server11",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8091
+      }
+    },
+    {
+      "name": "server12",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8092
+      }
+    },
+    {
+      "name": "server13",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8093
+      }
+    },
+    {
+      "name": "server14",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8094
+      }
+    },
+    {
+      "name": "server15",
+      "script" : "./server.js",
+      "env": {
+        "APP_PORT": 8095
+      }
+    }
+  ]
 }
